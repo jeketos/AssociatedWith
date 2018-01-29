@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jeketos.associatedwith.screen.play.FindGameActivity">
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/findGameButton"
+        style="@style/MainButtonStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/createLobbyButton"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:elevation="40dp"
+        android:text="@string/find_game"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/createLobbyButton"
+        style="@style/MainButtonStyle"
+        app:layout_constraintTop_toBottomOf="@+id/findGameButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/allLobbiesButton"
+        android:text="@string/create_lobby"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/allLobbiesButton"
+        style="@style/MainButtonStyle"
+        app:layout_constraintTop_toBottomOf="@+id/createLobbyButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/all_lobbies"/>
+
+</android.support.constraint.ConstraintLayout>

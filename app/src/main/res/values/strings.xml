@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">AssociatedWith</string>
+    <string name="find_game">Find game</string>
+    <string name="create_lobby">Create lobby</string>
+    <string name="all_lobbies">All lobbies</string>
+</resources>
