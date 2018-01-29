@@ -7,4 +7,7 @@ import javax.inject.Inject
 class FindGameViewModel @Inject constructor(
         app: Application
 ): AndroidViewModel(app) {
+
+
+
 }
