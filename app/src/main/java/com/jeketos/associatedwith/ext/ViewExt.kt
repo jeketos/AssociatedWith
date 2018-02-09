@@ -10,5 +10,7 @@ fun View.parkinsonClick(onClick: (View) -> Unit){
             .takeUntil(RxView.detaches(this))
             .throttleFirst(300, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({},{})
+            .subscribe({
+                onClick.invoke(this)
+            },{})
 }
