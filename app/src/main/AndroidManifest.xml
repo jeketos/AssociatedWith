@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".screen.riddle.RiddlerActivity" />
         <activity android:name=".screen.guess.GuesserActivity"></activity>
+        <activity android:name=".screen.lobbies.AllLobbiesActivity" />
     </application>
 
 </manifest>

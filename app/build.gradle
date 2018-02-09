@@ -72,6 +72,7 @@ dependencies {
     implementation "android.arch.lifecycle:compiler:$arch_version"
     implementation "android.arch.lifecycle:reactivestreams:$arch_version"
     kapt "android.arch.lifecycle:compiler:$arch_version"
+    //anko
     ext.anko_version = '0.10.1'
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation "org.jetbrains.anko:anko-sdk25:$anko_version"

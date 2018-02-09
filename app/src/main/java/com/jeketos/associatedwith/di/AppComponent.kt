@@ -5,6 +5,9 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.jeketos.associatedwith.App
 import com.jeketos.associatedwith.di.scope.AppScope
+import com.jeketos.associatedwith.screen.lobbies.AllLobbiesActivity
+import com.jeketos.associatedwith.screen.lobbies.AllLobbiesSubcomponent
+import com.jeketos.associatedwith.screen.lobbies.AllLobbiesViewModel
 import com.jeketos.associatedwith.screen.play.FindGameActivity
 import com.jeketos.associatedwith.screen.play.FindGameSubcomponent
 import com.jeketos.associatedwith.screen.play.FindGameViewModel
@@ -29,7 +32,7 @@ interface AppComponent {
 }
 
 @Module(
-        subcomponents = [FindGameSubcomponent::class],
+        subcomponents = [FindGameSubcomponent::class, AllLobbiesSubcomponent::class],
         includes = [ViewModelModule::class]
 )
 class AppModule{
@@ -43,6 +46,9 @@ abstract class BuildersModule{
     @ContributesAndroidInjector
     abstract fun findGameActivity(): FindGameActivity
 
+    @ContributesAndroidInjector
+    abstract fun allLobbiesActivity(): AllLobbiesActivity
+
 }
 
 @Module
@@ -52,6 +58,11 @@ abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(FindGameViewModel::class)
     abstract fun findGameViewModel(model: FindGameViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllLobbiesViewModel::class)
+    abstract fun findGameViewModel(model: AllLobbiesViewModel): ViewModel
 
 
     @Binds
