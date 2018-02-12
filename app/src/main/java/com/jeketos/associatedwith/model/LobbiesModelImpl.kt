@@ -9,7 +9,7 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class LobbiesModelImpl @Inject constructor(
-    private val rootNode: DatabaseReference
+    rootNode: DatabaseReference
 ): LobbiesModel {
 
     private val privateLobbiesNode = rootNode.child("lobbies").child("private")!!
