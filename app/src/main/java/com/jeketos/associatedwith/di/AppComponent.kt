@@ -3,8 +3,13 @@ package com.jeketos.associatedwith.di
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.jeketos.associatedwith.App
+import com.jeketos.associatedwith.BuildConfig
 import com.jeketos.associatedwith.di.scope.AppScope
+import com.jeketos.associatedwith.model.LobbiesModel
+import com.jeketos.associatedwith.model.LobbiesModelImpl
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesActivity
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesSubcomponent
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesViewModel
@@ -17,10 +22,7 @@ import com.jeketos.associatedwith.screen.lobbies.publiclobbies.PublicLobbiesView
 import com.jeketos.associatedwith.screen.play.FindGameActivity
 import com.jeketos.associatedwith.screen.play.FindGameSubcomponent
 import com.jeketos.associatedwith.screen.play.FindGameViewModel
-import dagger.Binds
-import dagger.BindsInstance
-import dagger.Component
-import dagger.Module
+import dagger.*
 import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
@@ -28,7 +30,12 @@ import dagger.multibindings.IntoMap
 
 @AppScope
 @Component(
-        modules = [AndroidInjectionModule::class, AppModule::class, BuildersModule::class]
+        modules = [
+            AndroidInjectionModule::class,
+            AppModule::class,
+            BuildersModule::class,
+            ModelModule::class
+        ]
 )
 interface AppComponent {
     @Component.Builder
@@ -38,6 +45,8 @@ interface AppComponent {
         fun build(): AppComponent
     }
     fun inject(app: App)
+    fun rootNode(): DatabaseReference
+    fun lobbiesModel(): LobbiesModel
 }
 
 @Module(
@@ -52,6 +61,20 @@ interface AppComponent {
 class AppModule{
 //    @Provides
 //    fun context(app: Application) = app.applicationContext!!
+
+    @AppScope
+    @Provides
+    fun rootFirebaseNode(): DatabaseReference =
+            FirebaseDatabase.getInstance().reference.child(BuildConfig.ROOT_NODE)
+}
+
+@Module
+class ModelModule{
+
+    @AppScope
+    @Provides
+    fun lobbiesModel(model: LobbiesModelImpl): LobbiesModel = model
+
 }
 
 @Module
