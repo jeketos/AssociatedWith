@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.ext.logd
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.screen_private_lobbies.*
 import javax.inject.Inject
 
 class PrivateLobbiesFragment: Fragment() {
@@ -23,6 +24,7 @@ class PrivateLobbiesFragment: Fragment() {
     private val viewModel: PrivateLobbiesViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(PrivateLobbiesViewModel::class.java)
     }
+    private val adapter by lazy { PrivateLobbiesAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
@@ -34,13 +36,15 @@ class PrivateLobbiesFragment: Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView.adapter = adapter
         viewModel.lobbiesState.observe(this, Observer {
-            when(it!!){
+            val state = it!!
+            when(state){
                 LobbiesState.Idle -> logd("idle")
-                is LobbiesState.Add -> logd("Add")
+                is LobbiesState.Add -> adapter.updateItem(state.lobby)
                 is LobbiesState.Change -> logd("Change")
                 is LobbiesState.Move -> logd("Move")
-                is LobbiesState.Remove -> logd("Remove")
+                is LobbiesState.Remove -> adapter.removeItem(state.lobby)
             }
         })
     }

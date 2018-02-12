@@ -28,7 +28,10 @@ class LobbiesModelImpl @Inject constructor(
         return  publicLobbiesNode.getRxObservableChildSnapshot()
                 .map {
                     val l = it.snapshot!!.getValue(Lobby::class.java)!!
-                    val lobby = l.copy(members = it.snapshot.child("members").children.map { it.key })
+                    val lobby = l.copy(
+                            id = it.snapshot.key,
+                            members = it.snapshot.child("members").children.map { it.key }
+                    )
                     DataEvent(it.op, lobby)
                 }
     }
