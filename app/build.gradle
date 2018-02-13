@@ -27,6 +27,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "default"
+    productFlavors {
+        develop {
+            dimension "default"
+            buildConfigField "String", "ROOT_NODE", "\"develop\""
+            signingConfig signingConfigs.debug
+        }
+        prod {
+            dimension "default"
+            buildConfigField "String", "ROOT_NODE", "\"prod\""
+            signingConfig signingConfigs.debug
+        }
+    }
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
@@ -43,7 +56,7 @@ sourceSets {
     }
 }
 kapt {
-    generateStubs = true
+    correctErrorTypes = true
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -72,16 +85,21 @@ dependencies {
     implementation "android.arch.lifecycle:compiler:$arch_version"
     implementation "android.arch.lifecycle:reactivestreams:$arch_version"
     kapt "android.arch.lifecycle:compiler:$arch_version"
+    //anko
     ext.anko_version = '0.10.1'
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
     //epoxy
-    implementation 'com.airbnb.android:epoxy:2.7.2'
+    ext.epoxy_version = '2.9.0'
+    implementation "com.airbnb.android:epoxy:$epoxy_version"
+    kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
     //firebase
     def firebase_version = "11.8.0"
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.google.firebase:firebase-auth:$firebase_version"
     implementation "com.google.firebase:firebase-database:$firebase_version"
+    //rx binding
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

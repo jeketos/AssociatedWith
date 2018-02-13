@@ -3,4 +3,7 @@
     <string name="find_game">Find game</string>
     <string name="create_lobby">Create lobby</string>
     <string name="all_lobbies">All lobbies</string>
+    <string name="public_tab">Public</string>
+    <string name="private_tab">Private</string>
+    <string name="members_count">Members count:</string>
 </resources>

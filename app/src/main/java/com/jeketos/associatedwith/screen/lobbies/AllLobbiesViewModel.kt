@@ -1,13 +1,10 @@
-package com.jeketos.associatedwith.screen.play
+package com.jeketos.associatedwith.screen.lobbies
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import javax.inject.Inject
 
-class FindGameViewModel @Inject constructor(
+class AllLobbiesViewModel @Inject constructor(
         app: Application
 ): AndroidViewModel(app) {
-
-
-
 }
