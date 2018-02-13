@@ -10,14 +10,20 @@ import kotlinx.android.synthetic.main.item_private_lobby.view.*
 class PrivateLobbiesAdapter: EpoxyAdapter() {
 
     fun updateItem(lobby: PrivateLobby){
-        addModel(PrivateLobbyModel(lobby))
+        val model = models.find { (it as PrivateLobbyModel).item.id == lobby.id } as PrivateLobbyModel?
+        if(model != null){
+            model.item = lobby
+            notifyModelChanged(model)
+        } else {
+            addModel(PrivateLobbyModel(lobby))
+        }
     }
 
     fun removeItem(lobby: PrivateLobby){
         removeModel(models.find { (it as PrivateLobbyModel).item.id == lobby.id })
     }
 
-    inner class PrivateLobbyModel(val item: PrivateLobby): EpoxyModel<View>(){
+    inner class PrivateLobbyModel(var item: PrivateLobby): EpoxyModel<View>(){
 
         override fun getDefaultLayout(): Int = R.layout.item_private_lobby
 
