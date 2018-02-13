@@ -33,7 +33,6 @@ class PrivateLobbiesAdapter: EpoxyAdapter() {
                 membersCount.text = item.members.size.toString()
             }
         }
-
     }
 
 }
