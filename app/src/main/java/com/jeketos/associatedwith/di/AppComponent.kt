@@ -10,6 +10,9 @@ import com.jeketos.associatedwith.BuildConfig
 import com.jeketos.associatedwith.di.scope.AppScope
 import com.jeketos.associatedwith.model.LobbiesModel
 import com.jeketos.associatedwith.model.LobbiesModelImpl
+import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
+import com.jeketos.associatedwith.screen.createlobby.CreateLobbySubcomponent
+import com.jeketos.associatedwith.screen.createlobby.CreateLobbyViewModel
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesActivity
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesSubcomponent
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesViewModel
@@ -54,7 +57,8 @@ interface AppComponent {
             FindGameSubcomponent::class,
             AllLobbiesSubcomponent::class,
             PrivateLobbiesSubcomponent::class,
-            PublicLobbiesSubcomponent::class
+            PublicLobbiesSubcomponent::class,
+            CreateLobbySubcomponent::class
         ],
         includes = [ViewModelModule::class]
 )
@@ -92,6 +96,9 @@ abstract class BuildersModule{
     @ContributesAndroidInjector
     abstract fun publicLobbiesFragment(): PublicLobbiesFragment
 
+    @ContributesAndroidInjector
+    abstract fun createLobbyDialogFragment(): CreateLobbyDialogFragment
+
 }
 
 @Module
@@ -116,6 +123,11 @@ abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(PublicLobbiesViewModel::class)
     abstract fun publicLobbiesViewModel(model: PublicLobbiesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateLobbyViewModel::class)
+    abstract fun createLobbyViewModel(model: CreateLobbyViewModel): ViewModel
 
 
     @Binds
