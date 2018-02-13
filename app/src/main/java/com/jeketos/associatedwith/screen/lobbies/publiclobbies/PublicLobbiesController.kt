@@ -17,6 +17,7 @@ class PublicLobbiesController: EpoxyController() {
         } else {
             data.add(item)
         }
+        data.sortBy { it.name }
         requestModelBuild()
     }
 

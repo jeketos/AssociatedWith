@@ -9,14 +9,19 @@ import kotlinx.android.synthetic.main.item_private_lobby.view.*
 
 class PrivateLobbiesAdapter: EpoxyAdapter() {
 
+    init {
+        enableDiffing()
+    }
+
     fun updateItem(lobby: PrivateLobby){
         val model = models.find { (it as PrivateLobbyModel).item.id == lobby.id } as PrivateLobbyModel?
         if(model != null){
             model.item = lobby
-            notifyModelChanged(model)
         } else {
-            addModel(PrivateLobbyModel(lobby))
+            models.add(PrivateLobbyModel(lobby))
         }
+        models.sortBy { (it as PrivateLobbyModel).item.name }
+        notifyModelsChanged()
     }
 
     fun removeItem(lobby: PrivateLobby){
