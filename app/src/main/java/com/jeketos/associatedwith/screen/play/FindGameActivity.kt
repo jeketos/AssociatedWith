@@ -1,5 +1,6 @@
 package com.jeketos.associatedwith.screen.play
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.jeketos.associatedwith.support.InjectorActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.screen_find_game.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class FindGameActivity : InjectorActivity() {
@@ -31,6 +33,15 @@ class FindGameActivity : InjectorActivity() {
         createLobbyButton.parkinsonClick {
             goToCreateLobby()
         }
+        findGameButton.parkinsonClick { viewModel.findGame() }
+        viewModel.state.observe(this, Observer {
+            val state = it!!
+            when (state){
+                FindGameViewModel.State.Idle -> {}
+                FindGameViewModel.State.Progress -> {}
+                is FindGameViewModel.State.OnGameFind -> toast("Lobby created id = " + state.lobbyId)
+            }
+        })
     }
 
     private fun goToCreateLobby() {

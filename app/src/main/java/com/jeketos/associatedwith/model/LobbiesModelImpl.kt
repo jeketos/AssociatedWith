@@ -5,7 +5,9 @@ import com.jeketos.associatedwith.data.DataEvent
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.PrivateLobby
 import com.jeketos.associatedwith.ext.getRxObservableChildSnapshot
+import com.jeketos.associatedwith.ext.setValueRx
 import io.reactivex.Observable
+import io.reactivex.Single
 import javax.inject.Inject
 
 class LobbiesModelImpl @Inject constructor(
@@ -25,6 +27,13 @@ class LobbiesModelImpl @Inject constructor(
                     )
                     DataEvent(it.op, lobby)
                 }
+    }
+
+    override fun createPrivateLobby(name: String, password: String): Single<PrivateLobby>{
+        val push = privateLobbiesNode.push()
+        return push.setValueRx(mapOf("name" to name, "password" to password))
+                .toSingleDefault(PrivateLobby(push.key, name, password))
+
     }
 
     override fun observePublicLobbies(): Observable<DataEvent<Lobby>>{
