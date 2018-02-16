@@ -15,6 +15,7 @@ class RestModelImpl @Inject constructor(
 
     override fun findGame(): Single<String> =
             service.findGame(context.getPreferences().get("userId", ""))
+                    .map { it.value }
                     .subscribeIoObserveMain()
 
 }
