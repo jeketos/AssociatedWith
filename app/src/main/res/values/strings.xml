@@ -6,4 +6,7 @@
     <string name="public_tab">Public</string>
     <string name="private_tab">Private</string>
     <string name="members_count">Members count:</string>
+    <string name="create_string">Create</string>
+    <string name="password">Password</string>
+    <string name="lobby_name">Lobby name</string>
 </resources>

@@ -3,6 +3,7 @@ package com.jeketos.associatedwith.di
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.jeketos.associatedwith.App
@@ -10,6 +11,12 @@ import com.jeketos.associatedwith.BuildConfig
 import com.jeketos.associatedwith.di.scope.AppScope
 import com.jeketos.associatedwith.model.LobbiesModel
 import com.jeketos.associatedwith.model.LobbiesModelImpl
+import com.jeketos.associatedwith.model.RestModel
+import com.jeketos.associatedwith.model.RestModelImpl
+import com.jeketos.associatedwith.rest.RetrofitModule
+import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
+import com.jeketos.associatedwith.screen.createlobby.CreateLobbySubcomponent
+import com.jeketos.associatedwith.screen.createlobby.CreateLobbyViewModel
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesActivity
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesSubcomponent
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesViewModel
@@ -34,7 +41,8 @@ import dagger.multibindings.IntoMap
             AndroidInjectionModule::class,
             AppModule::class,
             BuildersModule::class,
-            ModelModule::class
+            ModelModule::class,
+            RetrofitModule::class
         ]
 )
 interface AppComponent {
@@ -47,6 +55,7 @@ interface AppComponent {
     fun inject(app: App)
     fun rootNode(): DatabaseReference
     fun lobbiesModel(): LobbiesModel
+    fun context(): Context
 }
 
 @Module(
@@ -54,13 +63,14 @@ interface AppComponent {
             FindGameSubcomponent::class,
             AllLobbiesSubcomponent::class,
             PrivateLobbiesSubcomponent::class,
-            PublicLobbiesSubcomponent::class
+            PublicLobbiesSubcomponent::class,
+            CreateLobbySubcomponent::class
         ],
         includes = [ViewModelModule::class]
 )
 class AppModule{
-//    @Provides
-//    fun context(app: Application) = app.applicationContext!!
+    @Provides
+    fun context(app: Application) = app.applicationContext!!
 
     @AppScope
     @Provides
@@ -74,6 +84,10 @@ class ModelModule{
     @AppScope
     @Provides
     fun lobbiesModel(model: LobbiesModelImpl): LobbiesModel = model
+
+    @AppScope
+    @Provides
+    fun restModel(model: RestModelImpl): RestModel = model
 
 }
 
@@ -91,6 +105,9 @@ abstract class BuildersModule{
 
     @ContributesAndroidInjector
     abstract fun publicLobbiesFragment(): PublicLobbiesFragment
+
+    @ContributesAndroidInjector
+    abstract fun createLobbyDialogFragment(): CreateLobbyDialogFragment
 
 }
 
@@ -116,6 +133,11 @@ abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(PublicLobbiesViewModel::class)
     abstract fun publicLobbiesViewModel(model: PublicLobbiesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateLobbyViewModel::class)
+    abstract fun createLobbyViewModel(model: CreateLobbyViewModel): ViewModel
 
 
     @Binds

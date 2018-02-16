@@ -20,6 +20,7 @@ android {
                 includeCompileClasspath false
             }
         }
+        buildConfigField "String", "REST_URL", "\"https://us-central1-associatedwith-7398b.cloudfunctions.net/\""
     }
     buildTypes {
         release {
@@ -100,6 +101,12 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$firebase_version"
     //rx binding
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
