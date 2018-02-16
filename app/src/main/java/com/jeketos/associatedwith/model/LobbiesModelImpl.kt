@@ -4,6 +4,7 @@ import com.google.firebase.database.DatabaseReference
 import com.jeketos.associatedwith.data.DataEvent
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.PrivateLobby
+import com.jeketos.associatedwith.data.toMember
 import com.jeketos.associatedwith.ext.getRxObservableChildSnapshot
 import com.jeketos.associatedwith.ext.setValueRx
 import io.reactivex.Observable
@@ -23,7 +24,11 @@ class LobbiesModelImpl @Inject constructor(
                     val l = it.snapshot!!.getValue(PrivateLobby::class.java)!!
                     val lobby = l.copy(
                             id = it.snapshot.key,
-                            members = it.snapshot.child("members").children.map { it.key }
+                            members = it.snapshot
+                                    .child("members")
+                                    .children
+                                    .map { it.child("drawer") }
+                                    .map { it.toMember() }
                     )
                     DataEvent(it.op, lobby)
                 }
@@ -42,7 +47,11 @@ class LobbiesModelImpl @Inject constructor(
                     val l = it.snapshot!!.getValue(Lobby::class.java)!!
                     val lobby = l.copy(
                             id = it.snapshot.key,
-                            members = it.snapshot.child("members").children.map { it.key }
+                            members = it.snapshot
+                                    .child("members")
+                                    .children
+                                    .map { it.child("drawer") }
+                                    .map { it.toMember() }
                     )
                     DataEvent(it.op, lobby)
                 }

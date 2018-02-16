@@ -9,6 +9,7 @@ import com.jeketos.associatedwith.ext.parkinsonClick
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesActivity
 import com.jeketos.associatedwith.support.InjectorActivity
+import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.screen_find_game.*
 import org.jetbrains.anko.startActivity
@@ -22,6 +23,7 @@ class FindGameActivity : InjectorActivity() {
     private val viewModel: FindGameViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(FindGameViewModel::class.java)
     }
+    val progressDelegate by lazy { ProgressDelegate(supportFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -37,9 +39,12 @@ class FindGameActivity : InjectorActivity() {
         viewModel.state.observe(this, Observer {
             val state = it!!
             when (state){
-                FindGameViewModel.State.Idle -> {}
-                FindGameViewModel.State.Progress -> {}
-                is FindGameViewModel.State.OnGameFind -> toast("Lobby created id = " + state.lobbyId)
+                FindGameViewModel.State.Idle -> hideProgress()
+                FindGameViewModel.State.Progress -> showProgress()
+                is FindGameViewModel.State.OnGameFind -> {
+                    hideProgress()
+                    toast("Lobby created id = " + state.lobbyId)
+                }
             }
         })
     }
@@ -50,5 +55,13 @@ class FindGameActivity : InjectorActivity() {
 
     private fun goToAllLobbies() {
         startActivity<AllLobbiesActivity>()
+    }
+
+    fun showProgress(){
+        progressDelegate.showProgress()
+    }
+
+    fun hideProgress(){
+        progressDelegate.hideProgress()
     }
 }
