@@ -109,7 +109,7 @@ fun Disposable.addTo(disposable: CompositeDisposable){
 fun <T> Observable<T>.takeUntil(targetFragment: Fragment, disposeEvent: LifecycleEvent): Observable<T> {
     val disposeSubject = BehaviorSubject.create<Any>()
 
-    targetFragment.fragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks(){
+    targetFragment.fragmentManager?.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks(){
 
         override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
             super.onFragmentPaused(fm, f)
@@ -186,7 +186,7 @@ interface DisposeObserver : LifecycleObserver{
 fun <T> Observable<T>.disposeWhen(targetFragment: Fragment, disposeEvent: LifecycleEvent): Observable<T> {
     val composite = CompositeDisposable()
 
-    targetFragment.fragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks(){
+    targetFragment.fragmentManager?.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks(){
 
         override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
             super.onFragmentPaused(fm, f)
@@ -220,7 +220,7 @@ fun <T> Observable<T>.disposeWhen(targetFragment: Fragment, disposeEvent: Lifecy
 fun <T> Single<T>.disposeWhen(targetFragment: Fragment, disposeEvent: LifecycleEvent): Single<T> {
     val composite = CompositeDisposable()
 
-    targetFragment.fragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks(){
+    targetFragment.fragmentManager?.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks(){
 
         override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
             super.onFragmentPaused(fm, f)

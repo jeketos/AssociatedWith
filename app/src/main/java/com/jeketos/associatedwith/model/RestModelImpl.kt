@@ -18,4 +18,7 @@ class RestModelImpl @Inject constructor(
                     .map { it.value }
                     .subscribeIoObserveMain()
 
+    override fun getWords(): Single<List<String>> =
+            service.getWords().subscribeIoObserveMain()
+
 }

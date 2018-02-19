@@ -14,6 +14,8 @@ import com.jeketos.associatedwith.model.LobbiesModelImpl
 import com.jeketos.associatedwith.model.RestModel
 import com.jeketos.associatedwith.model.RestModelImpl
 import com.jeketos.associatedwith.rest.RetrofitModule
+import com.jeketos.associatedwith.screen.control.GameControlModule
+import com.jeketos.associatedwith.screen.control.riddle.RiddlerModule
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbySubcomponent
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyViewModel
@@ -111,7 +113,10 @@ abstract class BuildersModule{
 
 }
 
-@Module
+@Module(includes = [
+    GameControlModule::class,
+    RiddlerModule::class
+])
 abstract class ViewModelModule{
 
     @Binds

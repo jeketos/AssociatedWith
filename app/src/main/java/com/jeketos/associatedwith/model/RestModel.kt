@@ -6,4 +6,5 @@ interface RestModel {
 
     fun findGame(): Single<String>
 
+    fun getWords(): Single<List<String>>
 }

@@ -10,4 +10,7 @@ interface RestService{
     @GET("findGame")
     fun findGame(@Query("id")id: String = ""): Single<ValueHolder<String>>
 
+    @GET("getWords")
+    fun getWords(@Query("count")count: Int = 3): Single<List<String>>
+
 }

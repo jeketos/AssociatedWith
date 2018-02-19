@@ -17,9 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.riddle.RiddlerActivity" />
         <activity android:name=".screen.guess.GuesserActivity"></activity>
         <activity android:name=".screen.lobbies.AllLobbiesActivity" />
+        <activity android:name=".screen.control.GameControlActivity" />
     </application>
 
 </manifest>

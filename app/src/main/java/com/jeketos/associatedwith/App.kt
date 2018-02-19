@@ -2,6 +2,7 @@ package com.jeketos.associatedwith
 
 import android.app.Activity
 import android.support.multidex.MultiDexApplication
+import com.jeketos.associatedwith.data.USER_ID
 import com.jeketos.associatedwith.di.DaggerAppComponent
 import com.jeketos.associatedwith.ext.get
 import com.jeketos.associatedwith.ext.getPreferences
@@ -25,9 +26,9 @@ class App: MultiDexApplication(), HasActivityInjector {
                 .application(this)
                 .build()
                 .inject(this)
-        val id = getPreferences().get("userId", "")
+        val id = getPreferences().get(USER_ID, "")
         if(id.isEmpty()){
-            getPreferences().put("userId", UUID.randomUUID())
+            getPreferences().put(USER_ID, UUID.randomUUID())
         }
     }
 }
