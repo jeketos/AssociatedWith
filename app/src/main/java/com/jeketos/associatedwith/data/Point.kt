@@ -2,6 +2,7 @@ package com.jeketos.associatedwith.data
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
+import android.view.MotionEvent
 import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
@@ -21,3 +22,10 @@ data class Point(
 }
 
 val Point.actionEnum: Point.ACTION get() = Point.ACTION.values().find { it.value ==  action }!!
+
+fun Int.toPointAction() = when(this){
+    MotionEvent.ACTION_DOWN -> "START"
+    MotionEvent.ACTION_UP -> "STOP"
+    MotionEvent.ACTION_MOVE -> "MOVE"
+    else -> "STOP"
+}

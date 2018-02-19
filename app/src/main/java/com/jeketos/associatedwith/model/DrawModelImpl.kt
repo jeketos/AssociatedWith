@@ -5,6 +5,7 @@ import com.jeketos.associatedwith.data.Nodes
 import com.jeketos.associatedwith.data.Point
 import com.jeketos.associatedwith.ext.Op
 import com.jeketos.associatedwith.ext.getRxObservableChildSnapshot
+import com.jeketos.associatedwith.ext.loge
 import com.jeketos.associatedwith.ext.setValueRx
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -17,6 +18,7 @@ class DrawModelImpl @Inject constructor(
 
     override fun sendPoint(lobbyId: String, point: Point){
         drawPointsNode.child(lobbyId).push().setValueRx(point)
+                .subscribe({},{loge(it)})
     }
 
     override fun observePoints(lobbyId: String): Observable<Point> =

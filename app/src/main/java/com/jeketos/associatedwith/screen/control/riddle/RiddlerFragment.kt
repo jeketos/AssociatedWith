@@ -11,8 +11,11 @@ import android.view.ViewGroup
 import androidx.os.bundleOf
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
+import com.jeketos.associatedwith.data.Point
+import com.jeketos.associatedwith.data.toPointAction
 import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.screen_ridler.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -47,6 +50,10 @@ class RiddlerFragment : Fragment() {
                     showWordsDialog(it.words)
                 }
             }
+        }
+        drawingView.setOnTouchListener { v, event ->
+            viewModel.sendPoint(Point(event.action.toPointAction(),"FFFFFFFF", event.x, event.y))
+            false
         }
     }
 
