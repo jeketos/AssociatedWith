@@ -11,6 +11,7 @@ import com.jeketos.associatedwith.screen.control.riddle.RiddlerFragment
 import com.jeketos.associatedwith.support.InjectorActivity
 import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.AndroidInjection
+import org.jetbrains.anko.telecomManager
 import javax.inject.Inject
 
 class GameControlActivity : InjectorActivity() {
@@ -25,6 +26,7 @@ class GameControlActivity : InjectorActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        telecomManager
         setContentView(R.layout.screen_game_control)
         viewModel.state.observe(this, Observer {
             val state = it!!

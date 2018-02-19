@@ -1,10 +1,7 @@
 package com.jeketos.associatedwith.model
 
 import com.google.firebase.database.DatabaseReference
-import com.jeketos.associatedwith.data.DataEvent
-import com.jeketos.associatedwith.data.Lobby
-import com.jeketos.associatedwith.data.Member
-import com.jeketos.associatedwith.data.PrivateLobby
+import com.jeketos.associatedwith.data.*
 import com.jeketos.associatedwith.ext.getRxObservableChildSnapshot
 import com.jeketos.associatedwith.ext.getRxSingleSnapshot
 import com.jeketos.associatedwith.ext.loge
@@ -17,9 +14,9 @@ class LobbiesModelImpl @Inject constructor(
     rootNode: DatabaseReference
 ): LobbiesModel {
 
-    private val privateLobbiesNode = rootNode.child("lobbies").child("private")!!
-    private val publicLobbiesNode = rootNode.child("lobbies").child("public")!!
-    private val selectedWordsNode = rootNode.child("selectedWords")!!
+    private val privateLobbiesNode = rootNode.child(Nodes.privateLobbies)!!
+    private val publicLobbiesNode = rootNode.child(Nodes.publicLobbies)!!
+    private val selectedWordsNode = rootNode.child(Nodes.selectedWords)!!
 
     override fun observePrivateLobbies(): Observable<DataEvent<PrivateLobby>>{
       return  privateLobbiesNode.getRxObservableChildSnapshot()

@@ -9,10 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.jeketos.associatedwith.App
 import com.jeketos.associatedwith.BuildConfig
 import com.jeketos.associatedwith.di.scope.AppScope
-import com.jeketos.associatedwith.model.LobbiesModel
-import com.jeketos.associatedwith.model.LobbiesModelImpl
-import com.jeketos.associatedwith.model.RestModel
-import com.jeketos.associatedwith.model.RestModelImpl
+import com.jeketos.associatedwith.model.*
 import com.jeketos.associatedwith.rest.RetrofitModule
 import com.jeketos.associatedwith.screen.control.GameControlModule
 import com.jeketos.associatedwith.screen.control.riddle.RiddlerModule
@@ -86,6 +83,10 @@ class ModelModule{
     @AppScope
     @Provides
     fun lobbiesModel(model: LobbiesModelImpl): LobbiesModel = model
+
+    @AppScope
+    @Provides
+    fun drawModel(model: DrawModelImpl): DrawModel = model
 
     @AppScope
     @Provides
