@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.os.bundleOf
+import androidx.view.doOnLayout
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.Point
@@ -44,6 +45,9 @@ class GuesserFragment: Fragment() {
                 GuesserViewModel.State.Idle -> {}
                 is GuesserViewModel.State.OnPoint -> drawPoint(it.point)
             }
+        }
+        drawingView.doOnLayout {
+            viewModel.observePoints()
         }
     }
 

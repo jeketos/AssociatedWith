@@ -8,6 +8,7 @@ import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.Point
 import com.jeketos.associatedwith.ext.loge
 import com.jeketos.associatedwith.model.DrawModel
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class GuesserViewModel @Inject constructor(
@@ -16,20 +17,26 @@ class GuesserViewModel @Inject constructor(
 ): ViewModel(){
 
     private val state = MutableLiveData<State>().apply { value = State.Idle }
+    private var disposable: Disposable? = null
+//    init {
+//        observePoints()
+//    }
 
-    init {
-        observePoints()
-    }
-
-    private fun observePoints() {
-        drawModel.observePoints(lobby.id)
+    fun observePoints() {
+        disposable?.dispose()
+        disposable = drawModel.observePoints(lobby.id)
                 .subscribe({
-                    state.postValue(State.OnPoint(it))
+                    state.value = State.OnPoint(it)
                 },{loge(it)})
     }
 
     fun observeState(owner: LifecycleOwner, stateObserver: (State) -> Unit){
         state.observe(owner, Observer { stateObserver.invoke(it!!) })
+    }
+
+    override fun onCleared() {
+        disposable?.dispose()
+        super.onCleared()
     }
 
     sealed class State{
