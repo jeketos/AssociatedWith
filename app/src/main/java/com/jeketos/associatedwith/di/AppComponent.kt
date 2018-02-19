@@ -12,6 +12,7 @@ import com.jeketos.associatedwith.di.scope.AppScope
 import com.jeketos.associatedwith.model.*
 import com.jeketos.associatedwith.rest.RetrofitModule
 import com.jeketos.associatedwith.screen.control.GameControlModule
+import com.jeketos.associatedwith.screen.control.guess.GuesserModule
 import com.jeketos.associatedwith.screen.control.riddle.RiddlerModule
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbySubcomponent
@@ -116,7 +117,8 @@ abstract class BuildersModule{
 
 @Module(includes = [
     GameControlModule::class,
-    RiddlerModule::class
+    RiddlerModule::class,
+    GuesserModule::class
 ])
 abstract class ViewModelModule{
 

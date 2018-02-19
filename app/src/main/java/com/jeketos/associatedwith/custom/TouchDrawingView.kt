@@ -22,15 +22,12 @@ class TouchDrawingView @JvmOverloads constructor(
         when (event.action){
             MotionEvent.ACTION_DOWN -> {
                 actionDown(x, y)
-                invalidate()
             }
             MotionEvent.ACTION_MOVE -> {
                 actionMove(x, y)
-                invalidate()
             }
             MotionEvent.ACTION_UP -> {
                 actionUp()
-                invalidate()
             }
         }
         return true

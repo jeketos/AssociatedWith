@@ -65,6 +65,7 @@ open class DrawingView @JvmOverloads constructor(
         canvas.drawPoint(x, y, paint)
         mX = x
         mY = y
+        invalidate()
     }
 
     fun actionMove(x: Float,y: Float){
@@ -75,12 +76,14 @@ open class DrawingView @JvmOverloads constructor(
             mX = x
             mY = y
         }
+        invalidate()
     }
 
     fun actionUp(){
         path.lineTo(mX, mY)
         canvas.drawPath(path, paint)
         path.reset()
+        invalidate()
     }
 
     fun clear(){

@@ -15,7 +15,7 @@ import com.jeketos.associatedwith.data.Point
 import com.jeketos.associatedwith.data.toPointAction
 import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.screen_ridler.*
+import kotlinx.android.synthetic.main.screen_riddler.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class RiddlerFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.screen_ridler, container, false)
+            inflater.inflate(R.layout.screen_riddler, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

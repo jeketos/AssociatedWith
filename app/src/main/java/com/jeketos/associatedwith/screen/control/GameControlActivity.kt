@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.ext.replace
+import com.jeketos.associatedwith.screen.control.guess.GuesserFragment
 import com.jeketos.associatedwith.screen.control.riddle.RiddlerFragment
 import com.jeketos.associatedwith.support.InjectorActivity
 import com.jeketos.associatedwith.support.ProgressDelegate
@@ -45,6 +46,7 @@ class GameControlActivity : InjectorActivity() {
     }
 
     private fun showGuesser(lobby: Lobby) {
+        supportFragmentManager.replace(GuesserFragment.newInstance(lobby), R.id.fragmentContainer)
     }
 
     private fun showRiddler(lobby: Lobby) {
