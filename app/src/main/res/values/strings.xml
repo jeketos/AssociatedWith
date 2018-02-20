@@ -9,4 +9,5 @@
     <string name="create_string">Create</string>
     <string name="password">Password</string>
     <string name="lobby_name">Lobby name</string>
+    <string name="name_colon">%1s:</string>
 </resources>

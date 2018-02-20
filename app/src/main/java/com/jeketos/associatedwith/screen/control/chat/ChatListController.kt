@@ -44,7 +44,7 @@ abstract class  MessageModel : EpoxyModelWithHolder<Holder>(){
     override fun bind(holder: Holder) {
         val view = holder.view
         with(view){
-            name.text = item.name
+            name.text = context.getString(R.string.name_colon, item.name)
             message.text = item.message
             when(item.approved){
                 true -> {
@@ -54,6 +54,10 @@ abstract class  MessageModel : EpoxyModelWithHolder<Holder>(){
                 false -> {
                     name.setTextColor(ContextCompat.getColor(context, R.color.red))
                     message.setTextColor(ContextCompat.getColor(context, R.color.red))
+                }
+                else -> {
+                    name.setTextColor(ContextCompat.getColor(context, R.color.black))
+                    message.setTextColor(ContextCompat.getColor(context, R.color.black))
                 }
             }
         }
