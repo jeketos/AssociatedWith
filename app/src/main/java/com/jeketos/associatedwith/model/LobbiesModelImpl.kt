@@ -1,11 +1,10 @@
 package com.jeketos.associatedwith.model
 
 import com.google.firebase.database.DatabaseReference
-import com.jeketos.associatedwith.data.DataEvent
-import com.jeketos.associatedwith.data.Lobby
-import com.jeketos.associatedwith.data.PrivateLobby
-import com.jeketos.associatedwith.data.toMember
+import com.jeketos.associatedwith.data.*
 import com.jeketos.associatedwith.ext.getRxObservableChildSnapshot
+import com.jeketos.associatedwith.ext.getRxSingleSnapshot
+import com.jeketos.associatedwith.ext.loge
 import com.jeketos.associatedwith.ext.setValueRx
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -15,8 +14,9 @@ class LobbiesModelImpl @Inject constructor(
     rootNode: DatabaseReference
 ): LobbiesModel {
 
-    private val privateLobbiesNode = rootNode.child("lobbies").child("private")!!
-    private val publicLobbiesNode = rootNode.child("lobbies").child("public")!!
+    private val privateLobbiesNode = rootNode.child(Nodes.privateLobbies)!!
+    private val publicLobbiesNode = rootNode.child(Nodes.publicLobbies)!!
+    private val selectedWordsNode = rootNode.child(Nodes.selectedWords)!!
 
     override fun observePrivateLobbies(): Observable<DataEvent<PrivateLobby>>{
       return  privateLobbiesNode.getRxObservableChildSnapshot()
@@ -27,8 +27,7 @@ class LobbiesModelImpl @Inject constructor(
                             members = it.snapshot
                                     .child("members")
                                     .children
-                                    .map { it.child("drawer") }
-                                    .map { it.toMember() }
+                                    .map { it.getValue(Member::class.java)!!.copy(id = it.key) }
                     )
                     DataEvent(it.op, lobby)
                 }
@@ -50,11 +49,27 @@ class LobbiesModelImpl @Inject constructor(
                             members = it.snapshot
                                     .child("members")
                                     .children
-                                    .map { it.child("drawer") }
-                                    .map { it.toMember() }
+                                    .map { it.getValue(Member::class.java)!!.copy(id = it.key) }
                     )
                     DataEvent(it.op, lobby)
                 }
     }
 
+    override fun getLobby(lobbyId: String): Single<Lobby> =
+            publicLobbiesNode.child(lobbyId)
+                    .getRxSingleSnapshot()
+                    .map {
+                        val l = it.getValue(Lobby::class.java)!!
+                        l.copy(
+                                id = lobbyId,
+                                members = it.child("members")
+                                .children
+                                .map { it.getValue(Member::class.java)!!.copy(id = it.key) }
+                        )
+                    }
+
+    override fun setSelectedWord(lobbyId: String, word: String){
+        selectedWordsNode.child(lobbyId).child("selectedWord").setValueRx(word)
+                .subscribe({},{loge(it)})
+    }
 }

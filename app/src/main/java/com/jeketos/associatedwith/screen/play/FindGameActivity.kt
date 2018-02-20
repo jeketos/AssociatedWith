@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.ext.parkinsonClick
+import com.jeketos.associatedwith.screen.control.GameControlActivity
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesActivity
 import com.jeketos.associatedwith.support.InjectorActivity
@@ -13,7 +14,6 @@ import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.screen_find_game.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class FindGameActivity : InjectorActivity() {
@@ -43,10 +43,14 @@ class FindGameActivity : InjectorActivity() {
                 FindGameViewModel.State.Progress -> showProgress()
                 is FindGameViewModel.State.OnGameFind -> {
                     hideProgress()
-                    toast("Lobby created id = " + state.lobbyId)
+                    goToGameControl(state.lobbyId)
                 }
             }
         })
+    }
+
+    private fun goToGameControl(lobbyId: String) {
+        startActivity<GameControlActivity>("lobbyId" to lobbyId)
     }
 
     private fun goToCreateLobby() {

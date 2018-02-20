@@ -23,7 +23,7 @@ fun View.parkinsonClick(onClick: (View) -> Unit){
 fun getDividerItemDecoration(context: Context): DividerItemDecoration {
     val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
     val drawable = ContextCompat.getDrawable(context, R.drawable.line_divider)
-    dividerItemDecoration.setDrawable(drawable)
+    dividerItemDecoration.setDrawable(drawable!!)
     return dividerItemDecoration
 }
 

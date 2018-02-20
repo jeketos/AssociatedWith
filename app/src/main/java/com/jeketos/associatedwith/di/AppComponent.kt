@@ -9,11 +9,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.jeketos.associatedwith.App
 import com.jeketos.associatedwith.BuildConfig
 import com.jeketos.associatedwith.di.scope.AppScope
-import com.jeketos.associatedwith.model.LobbiesModel
-import com.jeketos.associatedwith.model.LobbiesModelImpl
-import com.jeketos.associatedwith.model.RestModel
-import com.jeketos.associatedwith.model.RestModelImpl
+import com.jeketos.associatedwith.model.*
 import com.jeketos.associatedwith.rest.RetrofitModule
+import com.jeketos.associatedwith.screen.control.GameControlModule
+import com.jeketos.associatedwith.screen.control.guess.GuesserModule
+import com.jeketos.associatedwith.screen.control.riddle.RiddlerModule
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbySubcomponent
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyViewModel
@@ -87,6 +87,10 @@ class ModelModule{
 
     @AppScope
     @Provides
+    fun drawModel(model: DrawModelImpl): DrawModel = model
+
+    @AppScope
+    @Provides
     fun restModel(model: RestModelImpl): RestModel = model
 
 }
@@ -111,7 +115,11 @@ abstract class BuildersModule{
 
 }
 
-@Module
+@Module(includes = [
+    GameControlModule::class,
+    RiddlerModule::class,
+    GuesserModule::class
+])
 abstract class ViewModelModule{
 
     @Binds

@@ -34,7 +34,7 @@ class CreateLobbyDialogFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.screen_create_lobby, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         create.parkinsonClick {
             viewModel.createLobby(name.text.toString(), password.text.toString())
@@ -43,8 +43,8 @@ class CreateLobbyDialogFragment : DialogFragment() {
             val state = it!!
             when(state){
                 CreateLobbyState.Idle -> {}
-                is CreateLobbyState.Created -> context.toast("lobby created")
-                is CreateLobbyState.Error -> context.toast("some error")
+                is CreateLobbyState.Created -> context?.toast("lobby created")
+                is CreateLobbyState.Error -> context?.toast("some error")
             }
         })
     }
