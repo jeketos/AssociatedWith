@@ -3,7 +3,6 @@ package com.jeketos.associatedwith.screen.control.riddle
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -13,21 +12,25 @@ import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.Point
 import com.jeketos.associatedwith.data.toPointAction
+import com.jeketos.associatedwith.ext.get
+import com.jeketos.associatedwith.ext.replace
+import com.jeketos.associatedwith.screen.control.chat.ChatListFragment
 import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.screen_riddler.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
-class RiddlerFragment : Fragment() {
+class RiddlerFragment : DaggerFragment() {
 
     companion object {
         @JvmStatic fun newInstance(lobby: Lobby) = RiddlerFragment().apply { arguments = bundleOf("lobby" to lobby) }
     }
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(RiddlerViewModel::class.java)
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(RiddlerViewModel::class)
     }
     val lobby by lazy { arguments!!["lobby"] as Lobby }
     private val progressDelegate by lazy { ProgressDelegate(fragmentManager!!) }
@@ -42,6 +45,9 @@ class RiddlerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(savedInstanceState == null){
+            childFragmentManager.replace(ChatListFragment.newInstance(lobby.id), R.id.chatContainer)
+        }
         viewModel.observe(this){
             when (it){
                 RiddlerViewModel.State.Progress -> showProgress()
@@ -56,7 +62,6 @@ class RiddlerFragment : Fragment() {
             false
         }
     }
-
     private fun showWordsDialog(words: List<String>) {
         AlertDialog.Builder(context!!)
                 .setSingleChoiceItems(
