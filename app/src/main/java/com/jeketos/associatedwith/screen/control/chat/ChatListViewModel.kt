@@ -19,4 +19,8 @@ class ChatListViewModel @Inject constructor(
     private fun observeMessages(): Flowable<List<Message>> =
             chatModel.observeMessages(lobbyId).toFlowable(BackpressureStrategy.BUFFER)
 
+    fun updateMessage(message: Message) {
+        chatModel.updateMessage(lobbyId, message)
+    }
+
 }

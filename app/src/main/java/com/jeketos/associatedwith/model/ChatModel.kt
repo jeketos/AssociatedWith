@@ -6,4 +6,5 @@ import io.reactivex.Observable
 interface ChatModel {
     fun observeMessages(lobbyId: String): Observable<List<Message>>
     fun sendMessage(lobbyId: String, message: Message)
+    fun updateMessage(lobbyId: String,message: Message)
 }

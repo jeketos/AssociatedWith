@@ -34,6 +34,12 @@ class ChatModelImpl @Inject constructor(
                 .map { it.toList() }
     }
 
+    override fun updateMessage(lobbyId: String, message: Message) {
+        chatNode.child(lobbyId).child(message.id)
+                .setValueRx(message)
+                .subscribe({},{loge(it)})
+    }
+
     override fun sendMessage(lobbyId: String, message: Message) {
         chatNode.child(lobbyId).push()
                 .setValueRx(message)

@@ -19,16 +19,20 @@ import javax.inject.Inject
 class ChatListFragment: Fragment() {
 
     companion object {
-        @JvmStatic fun newInstance(lobbyId: String) =
+        @JvmStatic fun newInstance(lobbyId: String, type: Type) =
                 ChatListFragment().apply {
-                    arguments = bundleOf("lobbyId" to lobbyId)
+                    arguments = bundleOf("lobbyId" to lobbyId, "type" to type)
                 }
     }
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(ChatListViewModel::class) }
     val lobbyId by lazy { arguments!!["lobbyId"] as String }
-    private val controller by lazy { ChatListController() }
+    val type by lazy { arguments!!["type"] as Type }
+    private val controller by lazy { ChatListController(
+            type,
+            {viewModel.updateMessage(it)}
+    ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
@@ -45,6 +49,10 @@ class ChatListFragment: Fragment() {
         viewModel.state.observe(this, KObserver{
             controller.updateItems(it)
         })
+    }
+
+    enum class Type{
+        GUESSER, RIDDLER
     }
 
 }

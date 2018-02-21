@@ -46,7 +46,10 @@ class RiddlerFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(savedInstanceState == null){
-            childFragmentManager.replace(ChatListFragment.newInstance(lobby.id), R.id.chatContainer)
+            childFragmentManager.replace(
+                    ChatListFragment.newInstance(lobby.id, ChatListFragment.Type.RIDDLER),
+                    R.id.chatContainer
+            )
         }
         viewModel.observe(this){
             when (it){
