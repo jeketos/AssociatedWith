@@ -3,7 +3,6 @@ package com.jeketos.associatedwith.screen.control.guess
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,16 @@ import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.Point
 import com.jeketos.associatedwith.data.actionEnum
+import com.jeketos.associatedwith.ext.parkinsonClick
+import com.jeketos.associatedwith.ext.replace
+import com.jeketos.associatedwith.ext.setEnterKeyListener
+import com.jeketos.associatedwith.screen.control.chat.ChatListFragment
 import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.screen_guesser.*
 import javax.inject.Inject
 
-class GuesserFragment: Fragment() {
+class GuesserFragment: DaggerFragment() {
 
     companion object {
         @JvmStatic fun newInstance(lobby: Lobby) =
@@ -25,7 +29,7 @@ class GuesserFragment: Fragment() {
     }
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    val viewModel by lazy {
+    private val viewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(GuesserViewModel::class.java)
     }
     val lobby: Lobby by lazy { arguments!!["lobby"] as Lobby }
@@ -40,6 +44,9 @@ class GuesserFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(savedInstanceState == null){
+            childFragmentManager.replace(ChatListFragment.newInstance(lobby.id), R.id.chatContainer)
+        }
         viewModel.observeState(this){
             when(it){
                 GuesserViewModel.State.Idle -> {}
@@ -49,6 +56,17 @@ class GuesserFragment: Fragment() {
         drawingView.doOnLayout {
             viewModel.observePoints()
         }
+        sendButton.parkinsonClick {
+            sendMessage()
+        }
+        messageToSend.setEnterKeyListener {
+            sendMessage()
+        }
+    }
+
+    private fun sendMessage() {
+        viewModel.sendMessage(messageToSend.text.toString())
+        messageToSend.setText("")
     }
 
     private fun drawPoint(point: Point) {

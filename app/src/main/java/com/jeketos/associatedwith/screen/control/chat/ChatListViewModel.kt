@@ -16,7 +16,7 @@ class ChatListViewModel @Inject constructor(
 
     val state = LiveDataReactiveStreams.fromPublisher(observeMessages())
 
-    private fun observeMessages(): Flowable<Message> =
+    private fun observeMessages(): Flowable<List<Message>> =
             chatModel.observeMessages(lobbyId).toFlowable(BackpressureStrategy.BUFFER)
 
 }

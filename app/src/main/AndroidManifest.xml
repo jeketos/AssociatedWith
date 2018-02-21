@@ -18,7 +18,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".screen.lobbies.AllLobbiesActivity" />
-        <activity android:name=".screen.control.GameControlActivity" />
+        <activity
+            android:name=".screen.control.GameControlActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
     </application>
 
 </manifest>

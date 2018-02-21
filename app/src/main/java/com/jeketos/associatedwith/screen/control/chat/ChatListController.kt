@@ -32,6 +32,12 @@ class ChatListController: EpoxyController() {
             }
         }
     }
+
+    fun updateItems(list: List<Message>) {
+        data.clear()
+        data.addAll(list)
+        requestModelBuild()
+    }
 }
 
 

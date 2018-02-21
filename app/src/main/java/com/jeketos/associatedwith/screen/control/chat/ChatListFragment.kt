@@ -11,6 +11,7 @@ import androidx.os.bundleOf
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.ext.KObserver
 import com.jeketos.associatedwith.ext.get
+import com.jeketos.associatedwith.ext.setScrollToLast
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.screen_chat_list.*
 import javax.inject.Inject
@@ -23,6 +24,7 @@ class ChatListFragment: Fragment() {
                     arguments = bundleOf("lobbyId" to lobbyId)
                 }
     }
+
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(ChatListViewModel::class) }
     val lobbyId by lazy { arguments!!["lobbyId"] as String }
@@ -39,8 +41,9 @@ class ChatListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.setController(controller)
+        recyclerView.setScrollToLast()
         viewModel.state.observe(this, KObserver{
-            controller.updateItem(it)
+            controller.updateItems(it)
         })
     }
 
