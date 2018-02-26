@@ -2,10 +2,7 @@ package com.jeketos.associatedwith.model
 
 import com.google.firebase.database.DatabaseReference
 import com.jeketos.associatedwith.data.*
-import com.jeketos.associatedwith.ext.getRxObservableChildSnapshot
-import com.jeketos.associatedwith.ext.getRxSingleSnapshot
-import com.jeketos.associatedwith.ext.loge
-import com.jeketos.associatedwith.ext.setValueRx
+import com.jeketos.associatedwith.ext.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -17,6 +14,7 @@ class LobbiesModelImpl @Inject constructor(
     private val privateLobbiesNode = rootNode.child(Nodes.privateLobbies)!!
     private val publicLobbiesNode = rootNode.child(Nodes.publicLobbies)!!
     private val selectedWordsNode = rootNode.child(Nodes.selectedWords)!!
+    private val winnersNode = rootNode.child(Nodes.winners)!!
 
     override fun observePrivateLobbies(): Observable<DataEvent<PrivateLobby>>{
       return  privateLobbiesNode.getRxObservableChildSnapshot()
@@ -72,4 +70,10 @@ class LobbiesModelImpl @Inject constructor(
         selectedWordsNode.child(lobbyId).child("selectedWord").setValueRx(word)
                 .subscribe({},{loge(it)})
     }
+
+    override fun observeWinner(lobbyId: String): Observable<Winner> =
+            winnersNode.child(lobbyId)
+                    .getRxObservableSnapshot()
+                    .filter { it.value != null }
+                    .map { it.getValue(Winner::class) }
 }

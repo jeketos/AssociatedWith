@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.USER_ID
+import com.jeketos.associatedwith.data.Winner
 import com.jeketos.associatedwith.ext.get
 import com.jeketos.associatedwith.ext.getPreferences
 import com.jeketos.associatedwith.ext.loge
@@ -28,6 +29,14 @@ class GameControlViewModel @Inject constructor(
                 },{
                     loge(it)
                 })
+        observeWinner()
+    }
+
+    private fun observeWinner() {
+        lobbiesModel.observeWinner(lobbyId)
+                .subscribe({
+                    state.value = State.OnWinner(it)
+                },{loge(it)})
     }
 
 
@@ -35,6 +44,7 @@ class GameControlViewModel @Inject constructor(
         object Progress: State()
         class  Riddler(val lobby: Lobby): State()
         class  Guesser(val lobby: Lobby): State()
+        class  OnWinner(val winner: Winner): State()
     }
 
 }

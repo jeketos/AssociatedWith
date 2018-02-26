@@ -6,9 +6,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
+import com.jeketos.associatedwith.data.Winner
 import com.jeketos.associatedwith.ext.replace
 import com.jeketos.associatedwith.screen.control.guess.GuesserFragment
 import com.jeketos.associatedwith.screen.control.riddle.RiddlerFragment
+import com.jeketos.associatedwith.screen.control.winner.WinnerDialogFragment
 import com.jeketos.associatedwith.support.InjectorActivity
 import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.AndroidInjection
@@ -41,8 +43,15 @@ class GameControlActivity : InjectorActivity() {
                     hideProgress()
                     showGuesser(state.lobby)
                 }
+                is GameControlViewModel.State.OnWinner -> {
+                    showWinnerDialog(state.winner)
+                }
             }
         })
+    }
+
+    private fun showWinnerDialog(winner: Winner) {
+        WinnerDialogFragment.newInstance(winner).show(supportFragmentManager, "winner_dialog")
     }
 
     private fun showGuesser(lobby: Lobby) {

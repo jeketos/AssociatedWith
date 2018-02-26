@@ -7,5 +7,6 @@ object Nodes {
     const val publicLobbies = "lobbies/public"
     const val privateLobbies = "lobbies/private"
     const val chats = "chats"
+    const val winners = "winners"
 
 }
