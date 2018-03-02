@@ -3,6 +3,7 @@ package com.jeketos.associatedwith.model
 import com.jeketos.associatedwith.data.DataEvent
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.PrivateLobby
+import com.jeketos.associatedwith.data.Winner
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -12,4 +13,5 @@ interface LobbiesModel {
     fun createPrivateLobby(name: String, password: String): Single<PrivateLobby>
     fun getLobby(lobbyId: String): Single<Lobby>
     fun setSelectedWord(lobbyId: String, word: String)
+    fun observeWinner(lobbyId: String): Observable<Winner>
 }

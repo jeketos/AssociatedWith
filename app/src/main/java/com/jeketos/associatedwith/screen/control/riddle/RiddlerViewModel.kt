@@ -2,10 +2,10 @@ package com.jeketos.associatedwith.screen.control.riddle
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.Point
+import com.jeketos.associatedwith.ext.KObserver
 import com.jeketos.associatedwith.ext.loge
 import com.jeketos.associatedwith.model.DrawModel
 import com.jeketos.associatedwith.model.LobbiesModel
@@ -31,8 +31,8 @@ class RiddlerViewModel @Inject constructor(
     }
 
     fun observe(owner: LifecycleOwner, observer: (State) -> Unit){
-        state.observe(owner, Observer {
-            observer.invoke(it!!)
+        state.observe(owner, KObserver {
+            observer.invoke(it)
         })
     }
 

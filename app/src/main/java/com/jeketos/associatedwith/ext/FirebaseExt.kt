@@ -8,6 +8,7 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
+import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 
 class ValueListener (
@@ -279,6 +280,8 @@ fun checkId(id: String?, name: String) {
         throw IllegalArgumentException("${name.capitalize()} id is empty")
     }
 }
+
+fun <T: Any>DataSnapshot.getValue(clazz: KClass<T>) = getValue(clazz.java)
 
 inline fun <reified T: Number> MutableData.getValue(default: T): T =
         if(value == null) default else getValue(T::class.java)!!

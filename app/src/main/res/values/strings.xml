@@ -9,4 +9,9 @@
     <string name="create_string">Create</string>
     <string name="password">Password</string>
     <string name="lobby_name">Lobby name</string>
+    <string name="name_colon">%1s:</string>
+    <string name="title">Title</string>
+    <string name="message_you_are_winner">You are win. Press OK to start draw.</string>
+    <string name="message_winner">The winner is %1s. Press OK to riddle or CANCEL to leave room.</string>
+    <string name="ok">Ok</string>
 </resources>

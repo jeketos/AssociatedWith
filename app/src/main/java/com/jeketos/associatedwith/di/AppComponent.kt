@@ -12,6 +12,7 @@ import com.jeketos.associatedwith.di.scope.AppScope
 import com.jeketos.associatedwith.model.*
 import com.jeketos.associatedwith.rest.RetrofitModule
 import com.jeketos.associatedwith.screen.control.GameControlModule
+import com.jeketos.associatedwith.screen.control.chat.ChatListModule
 import com.jeketos.associatedwith.screen.control.guess.GuesserModule
 import com.jeketos.associatedwith.screen.control.riddle.RiddlerModule
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
@@ -93,6 +94,10 @@ class ModelModule{
     @Provides
     fun restModel(model: RestModelImpl): RestModel = model
 
+    @AppScope
+    @Provides
+    fun chatModel(model: ChatModelImpl): ChatModel = model
+
 }
 
 @Module
@@ -118,7 +123,8 @@ abstract class BuildersModule{
 @Module(includes = [
     GameControlModule::class,
     RiddlerModule::class,
-    GuesserModule::class
+    GuesserModule::class,
+    ChatListModule::class
 ])
 abstract class ViewModelModule{
 

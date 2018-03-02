@@ -28,7 +28,7 @@ class App: MultiDexApplication(), HasActivityInjector {
                 .inject(this)
         val id = getPreferences().get(USER_ID, "")
         if(id.isEmpty()){
-            getPreferences().put(USER_ID, UUID.randomUUID())
+            getPreferences().put(USER_ID, UUID.randomUUID().toString())
         }
     }
 }
