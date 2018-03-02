@@ -30,6 +30,7 @@ class WinnerDialogFragment : DialogFragment() {
         val builder = AlertDialog.Builder(context!!)
                 .setTitle(R.string.title)
                 .setMessage(message)
+                .setCancelable(false)
                 .setPositiveButton(R.string.ok, { _, _ ->
                     activity?.finish()
                     context?.startActivity<GameControlActivity>("lobbyId" to winner.nextLobbyId)

@@ -67,6 +67,7 @@ class RiddlerFragment : DaggerFragment() {
     }
     private fun showWordsDialog(words: List<String>) {
         AlertDialog.Builder(context!!)
+                .setCancelable(false)
                 .setSingleChoiceItems(
                         words.toTypedArray(),
                         0,
