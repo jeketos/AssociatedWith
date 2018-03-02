@@ -3,6 +3,7 @@ package com.jeketos.associatedwith.screen.control.riddle
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,6 @@ import android.view.ViewGroup
 import androidx.os.bundleOf
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
-import com.jeketos.associatedwith.data.Point
-import com.jeketos.associatedwith.data.toPointAction
 import com.jeketos.associatedwith.ext.get
 import com.jeketos.associatedwith.ext.replace
 import com.jeketos.associatedwith.screen.control.chat.ChatListFragment
@@ -60,9 +59,9 @@ class RiddlerFragment : DaggerFragment() {
                 }
             }
         }
-        drawingView.setOnTouchListener { v, event ->
-            viewModel.sendPoint(Point(event.action.toPointAction(),"FFFFFFFF", event.x, event.y))
-            false
+        drawingView.setDrawColor(ContextCompat.getColor(context!!, R.color.red))
+        drawingView.setOnDrawListener {
+            viewModel.sendPoint(it)
         }
     }
     private fun showWordsDialog(words: List<String>) {

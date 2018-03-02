@@ -11,7 +11,6 @@ import androidx.view.doOnLayout
 import com.jeketos.associatedwith.R
 import com.jeketos.associatedwith.data.Lobby
 import com.jeketos.associatedwith.data.Point
-import com.jeketos.associatedwith.data.actionEnum
 import com.jeketos.associatedwith.ext.parkinsonClick
 import com.jeketos.associatedwith.ext.replace
 import com.jeketos.associatedwith.ext.setEnterKeyListener
@@ -73,10 +72,6 @@ class GuesserFragment: DaggerFragment() {
     }
 
     private fun drawPoint(point: Point) {
-        when (point.actionEnum){
-            Point.ACTION.START -> drawingView.actionDown(point.x, point.y)
-            Point.ACTION.STOP -> drawingView.actionUp()
-            Point.ACTION.MOVE -> drawingView.actionMove(point.x, point.y)
-        }
+        drawingView.draw(point)
     }
 }

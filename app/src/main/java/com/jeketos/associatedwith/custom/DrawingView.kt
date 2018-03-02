@@ -4,6 +4,9 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import com.jeketos.associatedwith.data.Point
+import com.jeketos.associatedwith.data.actionEnum
+import com.jeketos.associatedwith.ext.toColorInt
 
 open class DrawingView @JvmOverloads constructor(
         context: Context,
@@ -15,7 +18,7 @@ open class DrawingView @JvmOverloads constructor(
     private lateinit var  canvas : Canvas
     private var path : Path = Path()
     private var  bitmapPaint : Paint = Paint(Paint.DITHER_FLAG)
-    private var  paint : Paint = Paint()
+    var  paint : Paint = Paint()
     private var bitmapWidth : Int = 0
     private var bitmapHeight : Int = 0
     private var mX = 0f
@@ -101,5 +104,14 @@ open class DrawingView @JvmOverloads constructor(
 
     fun setStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
+    }
+
+    fun draw(point: Point){
+        setDrawColor(point.color.toColorInt())
+        when (point.actionEnum){
+            Point.ACTION.START -> actionDown(point.x*width, point.y*width)
+            Point.ACTION.STOP -> actionUp()
+            Point.ACTION.MOVE -> actionMove(point.x*width, point.y*width)
+        }
     }
 }
