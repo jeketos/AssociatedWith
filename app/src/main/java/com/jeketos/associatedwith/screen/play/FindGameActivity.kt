@@ -9,6 +9,7 @@ import com.jeketos.associatedwith.ext.parkinsonClick
 import com.jeketos.associatedwith.screen.control.GameControlActivity
 import com.jeketos.associatedwith.screen.createlobby.CreateLobbyDialogFragment
 import com.jeketos.associatedwith.screen.lobbies.AllLobbiesActivity
+import com.jeketos.associatedwith.screen.play.entername.EnterNameDialogFragment
 import com.jeketos.associatedwith.support.InjectorActivity
 import com.jeketos.associatedwith.support.ProgressDelegate
 import dagger.android.AndroidInjection
@@ -40,6 +41,7 @@ class FindGameActivity : InjectorActivity() {
             val state = it!!
             when (state){
                 FindGameViewModel.State.Idle -> hideProgress()
+                FindGameViewModel.State.EnterName -> showEnterNameDialog()
                 FindGameViewModel.State.Progress -> showProgress()
                 is FindGameViewModel.State.OnGameFind -> {
                     hideProgress()
@@ -47,6 +49,10 @@ class FindGameActivity : InjectorActivity() {
                 }
             }
         })
+    }
+
+    private fun showEnterNameDialog() {
+        EnterNameDialogFragment.newInstance().show(supportFragmentManager, "enter_name_dialog")
     }
 
     private fun goToGameControl(lobbyId: String) {

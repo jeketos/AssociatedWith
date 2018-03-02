@@ -5,10 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.content.Context
-import com.jeketos.associatedwith.data.Lobby
-import com.jeketos.associatedwith.data.Message
-import com.jeketos.associatedwith.data.Point
-import com.jeketos.associatedwith.data.USER_ID
+import com.jeketos.associatedwith.data.*
 import com.jeketos.associatedwith.ext.getPreferences
 import com.jeketos.associatedwith.ext.loge
 import com.jeketos.associatedwith.model.ChatModel
@@ -20,7 +17,7 @@ class GuesserViewModel @Inject constructor(
     private val lobby: Lobby,
     private val drawModel: DrawModel,
     private val chatModel: ChatModel,
-    context: Context
+    val context: Context
 ): ViewModel(){
 
     private val state = MutableLiveData<State>().apply { value = State.Idle }
@@ -51,7 +48,14 @@ class GuesserViewModel @Inject constructor(
 
     fun sendMessage(message: String) {
         if(message.isNotEmpty()){
-            chatModel.sendMessage(lobby.id, Message(userId = userId, name = "Misha", message = message))
+            chatModel.sendMessage(
+                    lobby.id,
+                    Message(
+                            userId = userId,
+                            name = context.getPreferences().getString(USER_NAME,""),
+                            message = message
+                    )
+            )
         }
     }
 

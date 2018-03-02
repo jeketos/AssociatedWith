@@ -14,4 +14,6 @@
     <string name="message_you_are_winner">You are win. Press OK to start draw.</string>
     <string name="message_winner">The winner is %1s. Press OK to riddle or CANCEL to leave room.</string>
     <string name="ok">Ok</string>
+    <string name="name">Name</string>
+    <string name="enter_string">Enter</string>
 </resources>
